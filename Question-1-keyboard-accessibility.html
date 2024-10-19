@@ -24,9 +24,15 @@ body {
 a{
   color: #006b3a;
 }
-main a{
-  outline: none;
-}
+a:focus,
+
+button:focus,
+
+input:focus {
+  outline: 2px solid #01532e;
+  outline-offset: 2px;
+},
+
 h2 {
   margin-top: 0;
 }
@@ -191,6 +197,7 @@ article p {
 /* Helpers */
 .pull-right {
   float: right;
+  margin-left: auto;
 }
 
   </style>
@@ -204,23 +211,17 @@ article p {
       
       <!-- Maybe this could be improved with aria-activedescendant later? -->
       <nav class="menu">
-        <a href="#">Home</a>
-        <a href="#">Politics</a>
-        <a href="#" tabindex="-1">Business</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Sports</a>
-        <a href="#" class="btn-search pull-right"><img src="https://raw.githubusercontent.com/udacity/ud891/2de2a0688c68809a3b453db3a24b1a59e8401459/lesson2-focus/02-dom-order/images/search.svg" alt="Search" />Search</a> 
+        <a href="#" aria-label="Home">Home</a>
+        <a href="#" aria-label="Politics">Politics</a>
+        <a href="#" aria-label="Business">Business</a>
+        <a href="#" aria-label="Entertainment">Entertainment</a>
+        <a href="#" aria-label="Sports">Sports</a>
+        <a href="#" class="btn-search pull-right" aria-label="Search the site"><img src="https://raw.githubusercontent.com/udacity/ud891/2de2a0688c68809a3b453db3a24b1a59e8401459/lesson2-focus/02-dom-order/images/search.svg" alt="Search" />Search</a> 
 
       </nav>
     </div>
   </header>
-  <div class="newsletter">
-    <div class="container">
-      <h3>Like the Funion? Consider joining our newsletter!</h3>
-      <input type="text">
-      <button type="button" onfocus="getFocus()">Sign up</button></div>
-      
-    </div>
+
   </div>
   <main class="container">
     <h2 class="offscreen">Top story</h2>
@@ -286,13 +287,21 @@ article p {
     </div>
     
   </main>
-  <!--   stuff can be added here :)
+ 
   <footer>
+    <div class="newsletter">
+      <div class="container">
+        <h3>Like the Funion? Consider joining our newsletter!</h3>
+        <input type="text" placeholder="Enter email"  aria-label="Newsletter email input">
+        <button type="button" onclick="buttonClick()">Sign up</button></div>
+        
+      </div>
+
   </footer>
-  -->
+ 
   
   <script>
-    function getFocus() {
+    function buttonClick() {
       window.open('https://aidaform.com/templates/thank-you-page-with-redirects.html','mywindow').focus()
     }
     </script>

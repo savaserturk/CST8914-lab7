@@ -29,20 +29,26 @@
         <h1>Feedback form</h1>
     <form>
         <div class="control">
-          <label>Full name <span class="required">*</span></label><input id="name" name="name" type="text" />
+          <label>Full name <span class="required">*</span></label>
+          <input id="name" name="name" type="text" />
         </div>
         <div class="control">
-          <label>Biography</label><textarea id="biography" name="biography" type="text"></textarea>
+          <label>Biography</label>
+          <textarea id="biography" name="biography" type="text" aria-describedby="biography_description"></textarea>
           <span>Include examples on your skills in JavaScript.</span>
         </div>
         
-          <div>Gender</div>
+        <fieldset>
+          <legend>Gender</legend>
           <div class="control">
-            <input id="gender_male" name="gender" type="radio" value="male" /><label>Male</label>
+              <input id="gender_male" name="gender" type="radio" value="male" />
+              <label for="gender_male">Male</label>
           </div>
           <div class="control">
-            <input id="gender_female" name="gender" type="radio" value="female" /><label>Female</label>
+              <input id="gender_female" name="gender" type="radio" value="female" />
+              <label for="gender_female">Female</label>
           </div>
+      </fieldset>
         
         <div class="control">
           <input id="accept_agbs" name="accept_agbs" type="checkbox" value="1" /><label>I accept the terms and conditions</label>
@@ -76,8 +82,9 @@
       
           if ((value = $.urlParam(input)) === null) {
             if ($('fieldset.errors').length === 0) {
-              $('form').prepend('<fieldset class="errors"><legend>Errors</legend><ul></ul></fieldset>');
+              $('form').prepend('<fieldset class="errors" tabindex="-1"><legend>Errors</legend><ul></ul></fieldset>');
             }
+            $('fieldset.errors').focus();
       
             $referencedElement = null;
             $elementToDescribe = null;
@@ -91,8 +98,8 @@
               $elementToDescribe = $input;
               $referencedElement = $input;
             }
-      // R.G. hint: fix next line ;)
-            $error = $('<a>' + message + '</a>');
+            // R.G. hint: fix next line ;)
+            $error = $('<a href="#' + $input.attr('id') + '">' + message + '</a>');
             $error.click(function (e) {
               // If we rely on the link's href pointing to the input's ID, it doesn't trigger forms mode in screen readers
               $referencedElement.focus();
@@ -101,9 +108,9 @@
             $elementToDescribe.attr('aria-describedby', input + '_description');
             $errorContainer.append('<li>').find('li:last').append($error);
       
-            if ($(':not(form):focus').length === 0) {
+            if ($('form :focus').length === 0) {
               // See https://stackoverflow.com/questions/46134247/jquery-setting-focus-doesnt-work-in-ie11/
-            
+              $('fieldset.errors').focus();
             }
           } else {
             if ($input.is(':checkbox')) {
@@ -124,8 +131,8 @@
             validateInput('biography', 'Please tell us something about your history!');
             validateInput('gender', 'Please tell us your gender!');
             validateInput('accept_agbs', 'You must accept our terms and conditions!');
-      
-            if ($('.error').length === 0) {
+              //fixed alert error massage
+            if ($('fieldset.errors').length === 0) {
               return alert('All inputs are valid.');
             }
           }
